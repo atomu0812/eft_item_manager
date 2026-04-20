@@ -13,26 +13,26 @@
   <body>
     <header class="site-header">
       <div class="header-inner">
-        <div class="logo">
+        <div class="header-logo">
           <%= link_to "ロゴ", root_path %>
         </div>
 
         <nav class="header-nav">
           <% if user_signed_in? %>
-            <%= link_to "マイページ", items_path %>
-            <%= link_to "ユーザー情報編集", edit_user_registration_path %>
-            <%= link_to "ログアウト", destroy_user_session_path, data: { turbo_method: :delete } %>
+            <%= link_to "マイページ", items_path, class: "header-button" %>
+            <%= link_to "ユーザー情報編集", edit_user_registration_path, class: "header-button" %>
+            <%= link_to "ログアウト", destroy_user_session_path, data: { turbo_method: :delete }, class: "header-button" %>
           <% else %>
-            <%= link_to "新規登録", new_user_registration_path %>
-            <%= link_to "ログイン", new_user_session_path %>
+            <%= link_to "新規登録", new_user_registration_path, class: "header-button" %>
+            <%= link_to "ログイン", new_user_session_path, class: "header-button" %>
           <% end %>
         </nav>
       </div>
     </header>
 
-    <main class="main-content">
+    <main class="page-container">
       <% if notice.present? %>
-        <p class="flash-message"><%= notice %></p>
+        <p class="flash-message notice"><%= notice %></p>
       <% end %>
 
       <% if alert.present? %>
