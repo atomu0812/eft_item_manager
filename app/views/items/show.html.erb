@@ -1,11 +1,11 @@
-<h1><%= @item.name %></h1>
+<div class="detail-card">
+  <h1 class="detail-title"><%= @item.name %></h1>
 
-<div style="margin-top: 24px;">
-  <p>アイテム説明①</p>
-  <div style="width: 300px; height: 120px; background: #e5e5e5; margin-bottom: 16px;"></div>
+  <p class="detail-label">アイテム説明①</p>
+  <div class="detail-box"></div>
 
-  <p>アイテム説明②</p>
-  <div style="width: 300px; height: 120px; background: #e5e5e5;"></div>
+  <p class="detail-label">アイテム説明②</p>
+  <div class="detail-box"></div>
+
+  <%= link_to "アイテム一覧に戻る", items_path, class: "back-link" %>
 </div>
-
-<p style="margin-top: 24px;"><%= link_to "アイテム一覧に戻る", items_path %></p>
