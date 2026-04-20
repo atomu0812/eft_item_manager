@@ -3,7 +3,23 @@
 <% if @items.any? %>
   <ul>
     <% @items.each do |item| %>
-      <li><%= item.name %></li>
+      <li>
+        <strong><%= link_to item.name, item_path(item) %></strong>
+
+        <% if user_signed_in? %>
+          <% user_item = current_user.user_items.find_by(item_id: item.id) %>
+
+          <%= form_with url: user_item_path(item_id: item.id), method: :patch, local: true do |f| %>
+            <div>
+              <%= f.label :quantity, "所持数" %>
+              <%= f.number_field :quantity, value: user_item&.quantity || 0, min: 0, name: "user_item[quantity]" %>
+              <%= f.submit "更新" %>
+            </div>
+          <% end %>
+        <% else %>
+          <p>所持数を更新するにはログインしてください。</p>
+        <% end %>
+      </li>
     <% end %>
   </ul>
 <% else %>
