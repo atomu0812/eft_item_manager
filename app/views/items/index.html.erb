@@ -1,0 +1,11 @@
+<h1>アイテム一覧</h1>
+
+<% if @items.any? %>
+  <ul>
+    <% @items.each do |item| %>
+      <li><%= item.name %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>アイテムが登録されていません。</p>
+<% end %>
