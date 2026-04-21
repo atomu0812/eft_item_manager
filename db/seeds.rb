@@ -9,3 +9,11 @@ end
 Item.find_or_create_by!(name: "Spark plug") do |item|
   item.required_quantity = 5
 end
+
+Item.find_or_create_by!(name: "Screw nuts") do |item|
+  item.required_quantity = 4
+end
+
+Item.find_or_create_by!(name: "Bolts") do |item|
+  item.required_quantity = 2
+end
