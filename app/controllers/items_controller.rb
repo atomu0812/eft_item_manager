@@ -1,6 +1,7 @@
 class ItemsController < ApplicationController
   def index
-    @items = Item.all
+    @q = params[:q].to_s.strip
+    @items = Item.search_by_name(@q)
 
     if user_signed_in?
       @user_items_by_item_id = current_user.user_items.index_by(&:item_id)
