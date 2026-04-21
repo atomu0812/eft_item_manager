@@ -1,0 +1,2 @@
+class Hideout < ApplicationRecord
+end
