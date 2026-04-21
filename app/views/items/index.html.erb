@@ -23,27 +23,46 @@
           <th>アイテム名</th>
           <th>現状数</th>
           <th>必要数</th>
+          <th>比較結果</th>
           <th>用途</th>
         </tr>
       </thead>
       <tbody>
         <% @items.each do |item| %>
-          <% user_item = current_user&.user_items&.find_by(item_id: item.id) %>
+          <% user_item = @user_items_by_item_id[item.id] %>
+          <% current_quantity = user_item&.quantity || 0 %>
+          <% required_quantity = item.required_quantity || 0 %>
+
           <tr>
             <td>
               <%= link_to item.name, item_path(item), class: "item-name-link" %>
             </td>
+
             <td>
               <% if user_signed_in? %>
                 <%= form_with url: user_item_path(item_id: item.id), method: :patch, local: true, class: "quantity-form" do |f| %>
-                  <%= f.number_field :quantity, value: user_item&.quantity || 0, min: 0, name: "user_item[quantity]" %>
+                  <%= f.number_field :quantity, value: current_quantity, min: 0, name: "user_item[quantity]" %>
                   <%= f.submit "更新", class: "simple-button" %>
                 <% end %>
               <% else %>
                 <span class="login-guide">ログインしてください</span>
               <% end %>
             </td>
-            <td><%= item.required_quantity %></td>
+
+            <td><%= required_quantity %></td>
+
+            <td>
+              <% if user_signed_in? %>
+                <% if current_quantity >= required_quantity %>
+                  必要数達成
+                <% else %>
+                  まだ必要
+                <% end %>
+              <% else %>
+                ログインしてください
+              <% end %>
+            </td>
+
             <td>ハイドアウト/タスク</td>
           </tr>
         <% end %>
