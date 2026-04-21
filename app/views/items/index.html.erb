@@ -9,10 +9,10 @@
     <% end %>
   </div>
 
-  <form class="items-search-form">
-    <label for="item-search">検索</label>
-    <input id="item-search" type="text" placeholder="アイテム名">
-  </form>
+  <%= form_with url: items_path, method: :get, local: true, class: "items-search-form" do %>
+    <%= label_tag :q, "検索" %>
+    <%= text_field_tag :q, @q, id: "item-search", placeholder: "アイテム名" %>
+  <% end %>
 </div>
 
 <div class="items-table-wrapper">
@@ -69,6 +69,6 @@
       </tbody>
     </table>
   <% else %>
-    <p>アイテムが登録されていません。</p>
+    <p>該当するアイテムがありません。</p>
   <% end %>
 </div>
