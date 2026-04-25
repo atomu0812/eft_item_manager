@@ -31,7 +31,8 @@
         <% @items.each do |item| %>
           <% user_item = @user_items_by_item_id[item.id] %>
           <% current_quantity = user_item&.quantity || 0 %>
-          <% required_quantity = item.required_quantity || 0 %>
+          <% required_quantity = item.total_required_quantity %>
+          <% usage_text = item.usage_labels.join("/") %>
 
           <tr>
             <td>
@@ -63,7 +64,7 @@
               <% end %>
             </td>
 
-            <td>ハイドアウト/タスク</td>
+            <td><%= usage_text.presence || "-" %></td>
           </tr>
         <% end %>
       </tbody>
