@@ -6,8 +6,7 @@ class Item < ApplicationRecord
   has_many :item_hideouts, dependent: :destroy
   has_many :hideouts, through: :item_hideouts
 
-  validates :name, presence: true
-  validates :required_quantity, presence: true, numericality: { greater_than_or_equal_to: 0 }
+  validates :name, presence: true, uniqueness: true
 
   scope :search_by_name, lambda { |keyword|
     if keyword.present?
@@ -16,4 +15,15 @@ class Item < ApplicationRecord
       all
     end
   }
+
+  def total_required_quantity
+    item_tasks.sum(:required_quantity) + item_hideouts.sum(:required_quantity)
+  end
+
+  def usage_labels
+    labels = []
+    labels << "タスク" if item_tasks.exists?
+    labels << "ハイドアウト" if item_hideouts.exists?
+    labels
+  end
 end
