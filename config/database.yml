@@ -16,6 +16,4 @@ test:
 
 production:
   <<: *default
-  database: eft_item_manager_production
-  username: eft_item_manager
-  password: <%= ENV["EFT_ITEM_MANAGER_DATABASE_PASSWORD"] %>
+  url: <%= ENV["DATABASE_URL"] %>
