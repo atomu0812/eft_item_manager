@@ -1,13 +1,41 @@
 <div class="detail-card">
   <h1 class="detail-title"><%= @item.name %></h1>
 
-  <p class="detail-label">必要数: <%= @item.total_required_quantity %></p>
+  <p class="detail-label">必要数合計: <%= @item.total_required_quantity %></p>
+  <p class="detail-label">タスク必要数: <%= @item.task_required_quantity %></p>
+  <p class="detail-label">ハイドアウト必要数: <%= @item.hideout_required_quantity %></p>
 
-  <p class="detail-label">アイテム説明①</p>
-  <div class="detail-box"></div>
+  <p class="detail-label">タスクで使用</p>
+  <div class="detail-box">
+    <% if @item.item_tasks.any? %>
+      <ul>
+        <% @item.item_tasks.each do |item_task| %>
+          <li>
+            <%= item_task.task.name %>:
+            <%= item_task.required_quantity %>個
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p>なし</p>
+    <% end %>
+  </div>
 
-  <p class="detail-label">アイテム説明②</p>
-  <div class="detail-box"></div>
+  <p class="detail-label">ハイドアウトで使用</p>
+  <div class="detail-box">
+    <% if @item.item_hideouts.any? %>
+      <ul>
+        <% @item.item_hideouts.each do |item_hideout| %>
+          <li>
+            <%= item_hideout.hideout.name %>:
+            <%= item_hideout.required_quantity %>個
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p>なし</p>
+    <% end %>
+  </div>
 
   <%= link_to "アイテム一覧に戻る", items_path, class: "back-link" %>
 </div>

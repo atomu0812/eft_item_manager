@@ -16,8 +16,16 @@ class Item < ApplicationRecord
     end
   }
 
+  def task_required_quantity
+    item_tasks.sum(:required_quantity)
+  end
+
+  def hideout_required_quantity
+    item_hideouts.sum(:required_quantity)
+  end
+
   def total_required_quantity
-    item_tasks.sum(:required_quantity) + item_hideouts.sum(:required_quantity)
+    task_required_quantity + hideout_required_quantity
   end
 
   def usage_labels
