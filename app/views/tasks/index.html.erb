@@ -1,0 +1,24 @@
+<div class="page-header">
+  <h1>タスク一覧</h1>
+</div>
+
+<% if @tasks.any? %>
+  <table class="items-table">
+    <thead>
+      <tr>
+        <th>タスク名</th>
+        <th>詳細</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @tasks.each do |task| %>
+        <tr>
+          <td><%= task.name %></td>
+          <td><%= link_to "詳細", task_path(task) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>タスクが登録されていません。</p>
+<% end %>
