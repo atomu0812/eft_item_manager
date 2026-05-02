@@ -1,7 +1,13 @@
 <div class="detail-card">
   <h1 class="detail-title"><%= @task.name %></h1>
 
-  <p class="detail-label">タスク詳細画面は作成中です。</p>
+  <p class="detail-label">必要アイテム数: <%= @task.item_tasks.count %>件</p>
+  <p class="detail-label">必要個数合計: <%= @task.item_tasks.sum(:required_quantity) %>個</p>
+
+  <p class="detail-label">タスク情報</p>
+  <div class="detail-box">
+    <p>タスク名: <%= @task.name %></p>
+  </div>
 
   <%= link_to "タスク一覧に戻る", tasks_path, class: "back-link" %>
 </div>
