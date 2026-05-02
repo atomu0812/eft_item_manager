@@ -4,6 +4,6 @@ class TasksController < ApplicationController
   end
 
   def show
-    @task = Task.find(params[:id])
+    @task = Task.includes(item_tasks: :item).find(params[:id])
   end
 end
