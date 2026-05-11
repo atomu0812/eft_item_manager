@@ -34,4 +34,12 @@ class Item < ApplicationRecord
     labels << "ハイドアウト" if item_hideouts.exists?
     labels
   end
+
+  def task_required_quantity_up_to_level(level)
+    item_tasks.joins(:task).where(tasks: { level: ..level }).sum(:required_quantity)
+  end
+
+  def total_required_quantity_up_to_level(level)
+    task_required_quantity_up_to_level(level) + hideout_required_quantity
+  end
 end

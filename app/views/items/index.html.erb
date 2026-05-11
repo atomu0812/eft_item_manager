@@ -12,6 +12,12 @@
   <%= form_with url: items_path, method: :get, local: true, class: "items-search-form" do %>
     <%= label_tag :q, "検索" %>
     <%= text_field_tag :q, @q, id: "item-search", placeholder: "アイテム名" %>
+
+    <%= label_tag :level_range, "必要レベル帯" %>
+    <%= select_tag :level_range,
+        options_for_select([["すべて", ""]] + @level_ranges.map { |level| ["Lv#{level}まで", level] }, @selected_level_range) %>
+
+    <%= submit_tag "絞り込む", class: "simple-button" %>
   <% end %>
 </div>
 
@@ -31,7 +37,12 @@
         <% @items.each do |item| %>
           <% user_item = @user_items_by_item_id[item.id] %>
           <% current_quantity = user_item&.quantity || 0 %>
-          <% required_quantity = item.total_required_quantity %>
+          <% required_quantity =
+               if @selected_level_range.present?
+                 item.total_required_quantity_up_to_level(@selected_level_range.to_i)
+               else
+                 item.total_required_quantity
+               end %>
           <% usage_text = item.usage_labels.join("/") %>
 
           <tr>
