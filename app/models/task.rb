@@ -1,6 +1,8 @@
 class Task < ApplicationRecord
   has_many :item_tasks, dependent: :destroy
   has_many :items, through: :item_tasks
+  has_many :user_tasks, dependent: :destroy
+  has_many :users, through: :user_tasks
 
   validates :name, presence: true, uniqueness: true
   validates :trader, presence: true

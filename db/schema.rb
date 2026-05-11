@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_05_11_163300) do
+ActiveRecord::Schema[7.1].define(version: 2026_05_11_172651) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -64,6 +64,17 @@ ActiveRecord::Schema[7.1].define(version: 2026_05_11_163300) do
     t.index ["user_id"], name: "index_user_items_on_user_id"
   end
 
+  create_table "user_tasks", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "task_id", null: false
+    t.boolean "completed", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["task_id"], name: "index_user_tasks_on_task_id"
+    t.index ["user_id", "task_id"], name: "index_user_tasks_on_user_id_and_task_id", unique: true
+    t.index ["user_id"], name: "index_user_tasks_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -83,4 +94,6 @@ ActiveRecord::Schema[7.1].define(version: 2026_05_11_163300) do
   add_foreign_key "item_tasks", "tasks"
   add_foreign_key "user_items", "items"
   add_foreign_key "user_items", "users"
+  add_foreign_key "user_tasks", "tasks"
+  add_foreign_key "user_tasks", "users"
 end
