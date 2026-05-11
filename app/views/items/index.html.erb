@@ -37,13 +37,15 @@
         <% @items.each do |item| %>
           <% user_item = @user_items_by_item_id[item.id] %>
           <% current_quantity = user_item&.quantity || 0 %>
+          <% selected_level = @selected_level_range.present? ? @selected_level_range.to_i : nil %>
           <% required_quantity =
-               if @selected_level_range.present?
-                 item.total_required_quantity_up_to_level(@selected_level_range.to_i)
+               if selected_level.present?
+                 item.total_required_quantity_up_to_level(selected_level)
                else
                  item.total_required_quantity
                end %>
-          <% usage_text = item.usage_labels.join("/") %>
+          <% usage_text = item.usage_labels.join(" / ") %>
+          <% usage_detail_text = item.usage_detail_text(selected_level) %>
 
           <tr>
             <td>
@@ -75,7 +77,14 @@
               <% end %>
             </td>
 
-            <td><%= usage_text.presence || "-" %></td>
+            <td>
+              <% if usage_text.present? %>
+                <div><%= usage_text %></div>
+                <div><%= usage_detail_text %></div>
+              <% else %>
+                -
+              <% end %>
+            </td>
           </tr>
         <% end %>
       </tbody>
