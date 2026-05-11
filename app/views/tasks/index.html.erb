@@ -7,8 +7,17 @@
     <div class="field">
       <%= label_tag :trader, "トレーダーで絞り込み" %>
       <%= select_tag :trader,
-          options_for_select([["すべて", ""]] + @traders.map { |trader| [trader, trader] }, @selected_trader),
-          onchange: "this.form.submit();" %>
+          options_for_select([["すべて", ""]] + @traders.map { |trader| [trader, trader] }, @selected_trader) %>
+    </div>
+
+    <div class="field">
+      <%= label_tag :level, "必要レベルで絞り込み" %>
+      <%= select_tag :level,
+          options_for_select([["すべて", ""]] + @levels.map { |level| ["Lv#{level}", level] }, @selected_level) %>
+    </div>
+
+    <div class="field">
+      <%= submit_tag "絞り込む", class: "header-button" %>
     </div>
   <% end %>
 </div>
@@ -19,6 +28,7 @@
       <tr>
         <th>タスク名</th>
         <th>トレーダー</th>
+        <th>必要レベル</th>
       </tr>
     </thead>
     <tbody>
@@ -26,6 +36,7 @@
         <tr>
           <td><%= link_to task.name, task_path(task) %></td>
           <td><%= task.trader %></td>
+          <td><%= task.level %></td>
         </tr>
       <% end %>
     </tbody>
