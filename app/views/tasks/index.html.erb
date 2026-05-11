@@ -19,15 +19,13 @@
       <tr>
         <th>タスク名</th>
         <th>トレーダー</th>
-        <th>詳細</th>
       </tr>
     </thead>
     <tbody>
       <% @tasks.each do |task| %>
         <tr>
-          <td><%= task.name %></td>
+          <td><%= link_to task.name, task_path(task) %></td>
           <td><%= task.trader %></td>
-          <td><%= link_to "詳細", task_path(task) %></td>
         </tr>
       <% end %>
     </tbody>
