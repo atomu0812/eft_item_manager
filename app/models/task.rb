@@ -3,4 +3,5 @@ class Task < ApplicationRecord
   has_many :items, through: :item_tasks
 
   validates :name, presence: true, uniqueness: true
+  validates :trader, presence: true
 end
