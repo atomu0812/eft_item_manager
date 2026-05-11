@@ -17,6 +17,10 @@
     <%= select_tag :level_range,
         options_for_select([["すべて", ""]] + @level_ranges.map { |level| ["Lv#{level}まで", level] }, @selected_level_range) %>
 
+    <%= label_tag :sort, "並び順" %>
+    <%= select_tag :sort,
+        options_for_select(@sort_options, @selected_sort.presence || "name") %>
+
     <%= submit_tag "絞り込む", class: "simple-button" %>
   <% end %>
 </div>
