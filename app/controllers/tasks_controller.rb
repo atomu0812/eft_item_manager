@@ -9,7 +9,7 @@ class TasksController < ApplicationController
 
     @tasks = Task.order(:name)
     @tasks = @tasks.where(trader: @selected_trader) if @selected_trader.present?
-    @tasks = @tasks.where(level: @selected_level.to_i) if @selected_level.present?
+    @tasks = @tasks.where(level: ..@selected_level.to_i) if @selected_level.present?
 
     if user_signed_in?
       @user_tasks_by_task_id = current_user.user_tasks.index_by(&:task_id)
