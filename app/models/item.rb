@@ -42,4 +42,19 @@ class Item < ApplicationRecord
   def total_required_quantity_up_to_level(level)
     task_required_quantity_up_to_level(level) + hideout_required_quantity
   end
+
+  def related_task_names_up_to_level(level = nil)
+    scope = tasks.distinct.order(:name)
+    scope = scope.where(level: ..level) if level.present?
+    scope.pluck(:name)
+  end
+
+  def related_hideout_names
+    hideouts.distinct.order(:name).pluck(:name)
+  end
+
+  def usage_detail_text(level = nil)
+    names = related_task_names_up_to_level(level) + related_hideout_names
+    names.uniq.join(", ")
+  end
 end
