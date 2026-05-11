@@ -17,6 +17,12 @@
     </div>
 
     <div class="field">
+      <%= label_tag :status, "進行状況で絞り込み" %>
+      <%= select_tag :status,
+          options_for_select([["すべて", ""], ["完了", "completed"], ["未完了", "incomplete"]], @selected_status) %>
+    </div>
+
+    <div class="field">
       <%= submit_tag "絞り込む", class: "header-button" %>
     </div>
   <% end %>
@@ -29,14 +35,28 @@
         <th>タスク名</th>
         <th>トレーダー</th>
         <th>必要レベル</th>
+        <th>進行状況</th>
       </tr>
     </thead>
     <tbody>
       <% @tasks.each do |task| %>
+        <% user_task = @user_tasks_by_task_id[task.id] %>
+        <% completed = user_task&.completed || false %>
+
         <tr>
           <td><%= link_to task.name, task_path(task) %></td>
           <td><%= task.trader %></td>
           <td><%= task.level %></td>
+          <td>
+            <% if user_signed_in? %>
+              <%= form_with url: user_task_path(task_id: task.id, trader: @selected_trader, level: @selected_level, status: @selected_status), method: :patch, local: true do |f| %>
+                <%= f.hidden_field :completed, value: completed ? "0" : "1", name: "user_task[completed]" %>
+                <%= f.submit(completed ? "完了" : "未完了", class: "simple-button") %>
+              <% end %>
+            <% else %>
+              ログインしてください
+            <% end %>
+          </td>
         </tr>
       <% end %>
     </tbody>
