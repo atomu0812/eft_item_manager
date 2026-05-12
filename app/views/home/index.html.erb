@@ -1,14 +1,39 @@
-<h1>EFT Item Manager</h1>
+<div class="detail-card">
+  <h1 class="detail-title">EFT Item Manager</h1>
 
-<p>トップページです。</p>
+  <% if user_signed_in? %>
+    <p>
+      Escape from Tarkov で必要なアイテムを、
+      タスク・ハイドアウト・所持数とあわせて管理できるアプリです。
+    </p>
+    <p>
+      必要数と現在の所持数を比較しながら、
+      売ってよいアイテムと残しておくべきアイテムを分かりやすく確認できます。
+    </p>
+    <p>
+      ログイン中：<%= current_user.email %>
+    </p>
 
-<p><%= link_to "アイテム一覧", items_path %></p>
+    <div class="field" style="margin-top: 16px;">
+      <p><%= link_to "アイテム一覧", items_path %></p>
+      <p><%= link_to "タスク一覧", tasks_path %></p>
+      <p><%= link_to "ユーザー情報編集", edit_user_registration_path %></p>
+      <p><%= link_to "ログアウト", destroy_user_session_path, data: { turbo_method: :delete } %></p>
+    </div>
+  <% else %>
+    <p>
+      Escape from Tarkov で必要なアイテムを、
+      タスク・ハイドアウト・所持数とあわせて管理できるアプリです。
+    </p>
+    <p>
+      必要数と現在の所持数を比較しながら、
+      売ってよいアイテムと残しておくべきアイテムを分かりやすく確認できます。
+    </p>
 
-<% if user_signed_in? %>
-  <p>ログイン中: <%= current_user.email %></p>
-  <%= link_to "ログアウト", destroy_user_session_path, data: { turbo_method: :delete } %>
-<% else %>
-  <%= link_to "新規登録", new_user_registration_path %>
-  <br>
-  <%= link_to "ログイン", new_user_session_path %>
-<% end %>
+    <div class="field" style="margin-top: 16px;">
+      <p><%= link_to "アイテム一覧", items_path %></p>
+      <p><%= link_to "新規登録", new_user_registration_path %></p>
+      <p><%= link_to "ログイン", new_user_session_path %></p>
+    </div>
+  <% end %>
+</div>
