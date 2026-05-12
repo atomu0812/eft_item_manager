@@ -1,0 +1,35 @@
+ja:
+  activerecord:
+    models:
+      user: "ユーザー"
+    attributes:
+      user:
+        email: "メールアドレス"
+        password: "パスワード"
+        password_confirmation: "パスワード確認"
+        current_password: "現在のパスワード"
+        remember_me: "ログイン状態を保持する"
+
+  devise:
+    failure:
+      already_authenticated: "すでにログインしています。"
+      invalid: "メールアドレスまたはパスワードが正しくありません。"
+      not_found_in_database: "メールアドレスまたはパスワードが正しくありません。"
+      unauthenticated: "ログインしてください。"
+    sessions:
+      signed_in: "ログインしました。"
+      signed_out: "ログアウトしました。"
+    registrations:
+      signed_up: "アカウント登録が完了しました。"
+      updated: "ユーザー情報を更新しました。"
+      destroyed: "アカウントを削除しました。"
+    passwords:
+      send_instructions: "パスワード再設定メールを送信しました。"
+      updated: "パスワードを変更しました。"
+      updated_not_active: "パスワードを変更しました。"
+
+  errors:
+    messages:
+      not_saved:
+        one: "1件のエラーにより保存できませんでした。"
+        other: "%{count}件のエラーにより保存できませんでした。"
