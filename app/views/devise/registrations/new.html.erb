@@ -1,0 +1,29 @@
+<div class="detail-card">
+  <h1 class="detail-title">新規登録</h1>
+
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+    <div class="field">
+      <%= f.label :email, "メールアドレス" %><br />
+      <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :password, "パスワード" %><br />
+      <%= f.password_field :password, autocomplete: "new-password" %>
+    </div>
+
+    <div class="field">
+      <%= f.label :password_confirmation, "パスワード確認" %><br />
+      <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+    </div>
+
+    <div class="actions">
+      <%= f.submit "登録する", class: "header-button" %>
+    </div>
+  <% end %>
+
+  <div class="field" style="margin-top: 16px;">
+    <p><%= link_to "ログインはこちら", new_user_session_path %></p>
+    <p><%= link_to "パスワードをお忘れですか？", new_user_password_path %></p>
+  </div>
+</div>
