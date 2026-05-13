@@ -35,6 +35,14 @@ ja:
       reset_password_instructions:
         subject: "パスワード再設定のご案内"
 
+  views:
+    pagination:
+      first: "最初"
+      last: "最後"
+      previous: "前へ"
+      next: "次へ"
+      truncate: "..."
+
   errors:
     messages:
       not_saved:

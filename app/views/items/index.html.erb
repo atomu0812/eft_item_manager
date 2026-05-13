@@ -93,6 +93,10 @@
         <% end %>
       </tbody>
     </table>
+
+    <div style="margin-top: 24px; text-align: center;">
+      <%= paginate @items %>
+    </div>
   <% else %>
     <p>該当するアイテムがありません。</p>
   <% end %>
