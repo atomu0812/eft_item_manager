@@ -1,4 +1,6 @@
 class ItemsController < ApplicationController
+  PER_PAGE = 20
+
   def index
     @q = params[:q].to_s.strip
     @selected_level_range = params[:level_range].to_s.strip
@@ -11,7 +13,7 @@ class ItemsController < ApplicationController
       ["ハイドアウト必要数順", "hideout_required_quantity"]
     ]
 
-    @items = Item
+    items = Item
       .search_by_name(@q)
       .includes(item_tasks: :task, item_hideouts: :hideout)
       .order(:name)
@@ -19,10 +21,12 @@ class ItemsController < ApplicationController
 
     if @selected_level_range.present?
       level = @selected_level_range.to_i
-      @items = @items.select { |item| item.total_required_quantity_up_to_level(level).positive? }
+      items = items.select { |item| item.total_required_quantity_up_to_level(level).positive? }
     end
 
-    @items = sort_items(@items)
+    items = sort_items(items)
+
+    @items = Kaminari.paginate_array(items).page(params[:page]).per(PER_PAGE)
 
     if user_signed_in?
       @user_items_by_item_id = current_user.user_items.index_by(&:item_id)
