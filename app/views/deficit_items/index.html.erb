@@ -1,0 +1,58 @@
+<div class="detail-card" style="max-width: 900px; margin: 0 auto;">
+  <h1 class="detail-title">不足アイテム一覧</h1>
+
+  <p style="margin-bottom: 24px; line-height: 1.8;">
+    必要数に対して所持数が足りていないアイテムを一覧で確認できます。
+  </p>
+
+  <div class="field" style="margin-bottom: 24px;">
+    <%= form_with url: deficit_items_path, method: :get, local: true do %>
+      <div style="margin-bottom: 8px;">
+        <%= label_tag :sort, "並び順" %>
+      </div>
+      <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+        <%= select_tag :sort, options_for_select(@sort_options, @selected_sort) %>
+        <%= submit_tag "適用" %>
+      </div>
+    <% end %>
+  </div>
+
+  <% if @deficit_items.any? %>
+    <table style="width: 100%; border-collapse: collapse; margin-top: 16px;">
+      <thead>
+        <tr>
+          <th style="text-align: left; padding: 14px 10px; border-bottom: 1px solid #ccc;">アイテム名</th>
+          <th style="text-align: right; padding: 14px 10px; border-bottom: 1px solid #ccc;">必要数</th>
+          <th style="text-align: right; padding: 14px 10px; border-bottom: 1px solid #ccc;">所持数</th>
+          <th style="text-align: right; padding: 14px 10px; border-bottom: 1px solid #ccc;">不足数</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @deficit_items.each do |item| %>
+          <% user_item = @user_items_by_item_id[item.id] %>
+          <% owned_quantity = user_item&.quantity.to_i %>
+          <tr>
+            <td style="padding: 14px 10px; border-bottom: 1px solid #eee; line-height: 1.6;">
+              <%= link_to item.name, item_path(item) %>
+            </td>
+            <td style="text-align: right; padding: 14px 10px; border-bottom: 1px solid #eee;">
+              <%= item.total_required_quantity %>
+            </td>
+            <td style="text-align: right; padding: 14px 10px; border-bottom: 1px solid #eee;">
+              <%= owned_quantity %>
+            </td>
+            <td style="text-align: right; padding: 14px 10px; border-bottom: 1px solid #eee; font-weight: bold;">
+              <%= item.deficit_quantity_for(current_user) %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <p style="margin-top: 24px;">不足しているアイテムはありません。</p>
+  <% end %>
+
+  <div class="field" style="margin-top: 24px;">
+    <p><%= link_to "アイテム一覧へ戻る", items_path %></p>
+  </div>
+</div>
