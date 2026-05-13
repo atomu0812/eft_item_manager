@@ -16,17 +16,24 @@ ja:
       invalid: "メールアドレスまたはパスワードが正しくありません。"
       not_found_in_database: "メールアドレスまたはパスワードが正しくありません。"
       unauthenticated: "ログインしてください。"
+
     sessions:
       signed_in: "ログインしました。"
       signed_out: "ログアウトしました。"
+
     registrations:
       signed_up: "アカウント登録が完了しました。"
       updated: "ユーザー情報を更新しました。"
       destroyed: "アカウントを削除しました。"
+
     passwords:
       send_instructions: "パスワード再設定メールを送信しました。"
       updated: "パスワードを変更しました。"
       updated_not_active: "パスワードを変更しました。"
+
+    mailer:
+      reset_password_instructions:
+        subject: "パスワード再設定のご案内"
 
   errors:
     messages:
