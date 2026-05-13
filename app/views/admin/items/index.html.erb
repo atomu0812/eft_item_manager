@@ -1,0 +1,64 @@
+<div class="admin-card">
+  <h1 class="detail-title">管理者用アイテム一覧</h1>
+
+  <p class="admin-description">
+    登録されているアイテム情報を編集できます。
+  </p>
+
+  <div class="admin-search-area">
+    <%= form_with url: admin_items_path, method: :get, local: true do %>
+      <div class="field">
+        <%= label_tag :q, "アイテム名で検索" %>
+      </div>
+
+      <div class="admin-search-form">
+        <%= text_field_tag :q, @q, placeholder: "アイテム名" %>
+        <%= submit_tag "検索", class: "simple-button" %>
+      </div>
+    <% end %>
+  </div>
+
+  <% if @items.any? %>
+    <table class="admin-items-table">
+      <thead>
+        <tr>
+          <th>アイテム名</th>
+          <th>詳細</th>
+          <th class="admin-action-column">操作</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @items.each do |item| %>
+          <tr>
+            <td class="admin-item-name">
+              <%= item.name %>
+            </td>
+
+            <td class="admin-item-description">
+              <% if item.description.present? %>
+                <%= truncate(item.description, length: 80) %>
+              <% else %>
+                <span class="login-guide">未登録</span>
+              <% end %>
+            </td>
+
+            <td class="admin-action-column">
+              <%= link_to "編集", edit_admin_item_path(item), class: "admin-edit-button" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+
+    <div class="pagination-area">
+      <%= paginate @items %>
+    </div>
+  <% else %>
+    <p style="margin-top: 24px;">該当するアイテムがありません。</p>
+  <% end %>
+
+  <div class="field" style="margin-top: 24px;">
+    <p><%= link_to "管理画面へ戻る", admin_root_path %></p>
+  </div>
+</div>
