@@ -28,6 +28,15 @@ class Item < ApplicationRecord
     task_required_quantity + hideout_required_quantity
   end
 
+  def owned_quantity_for(user)
+    user_item = user_items.find { |record| record.user_id == user.id }
+    user_item&.quantity.to_i
+  end
+
+  def deficit_quantity_for(user)
+    [total_required_quantity - owned_quantity_for(user), 0].max
+  end
+
   def usage_labels
     labels = []
     labels << "タスク" if item_tasks.exists?
