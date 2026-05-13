@@ -1,6 +1,15 @@
 <div class="detail-card">
   <h1 class="detail-title"><%= @item.name %></h1>
 
+  <p class="detail-label">詳細説明</p>
+  <div class="detail-box detail-description-box">
+    <% if @item.description.present? %>
+      <p><%= simple_format(@item.description) %></p>
+    <% else %>
+      <p>説明はまだ登録されていません。</p>
+    <% end %>
+  </div>
+
   <p class="detail-label">必要数合計: <%= @item.total_required_quantity %></p>
   <p class="detail-label">タスク必要数: <%= @item.task_required_quantity %></p>
   <p class="detail-label">ハイドアウト必要数: <%= @item.hideout_required_quantity %></p>

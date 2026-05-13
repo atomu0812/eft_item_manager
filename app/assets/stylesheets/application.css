@@ -137,10 +137,13 @@ a {
 }
 
 .simple-button {
+  display: inline-block;
   padding: 4px 10px;
   border: 1px solid #999;
   background-color: #efefef;
   cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
 }
 
 .login-guide {
@@ -168,12 +171,126 @@ a {
 
 .detail-box {
   width: 100%;
-  height: 120px;
+  min-height: 120px;
   background-color: #e5e5e5;
   margin-bottom: 16px;
+  padding: 12px;
+}
+
+.detail-description-box {
+  height: auto;
+  line-height: 1.7;
 }
 
 .back-link {
   display: inline-block;
   margin-top: 8px;
+}
+
+/* admin */
+
+.admin-card {
+  max-width: 900px;
+  width: 100%;
+  margin: 0 auto;
+  border: 1px solid #cfcfcf;
+  background-color: #fff;
+  padding: 24px;
+}
+
+.admin-form-card {
+  max-width: 700px;
+  width: 100%;
+  margin: 0 auto;
+  border: 1px solid #cfcfcf;
+  background-color: #fff;
+  padding: 24px;
+}
+
+.admin-description {
+  margin-bottom: 24px;
+  line-height: 1.8;
+}
+
+.admin-search-area {
+  margin-bottom: 24px;
+}
+
+.admin-search-form {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.admin-search-form input[type="text"] {
+  width: 240px;
+  padding: 4px 8px;
+}
+
+.admin-items-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+}
+
+.admin-items-table th,
+.admin-items-table td {
+  padding: 14px 10px;
+  border-bottom: 1px solid #eee;
+  vertical-align: top;
+}
+
+.admin-items-table th {
+  border-bottom: 1px solid #ccc;
+  background-color: #f8f8f8;
+}
+
+.admin-item-name {
+  width: 42%;
+  line-height: 1.6;
+  font-weight: bold;
+}
+
+.admin-item-description {
+  width: 43%;
+  line-height: 1.6;
+}
+
+.admin-action-column {
+  width: 100px;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.admin-edit-button {
+  display: inline-block;
+  min-width: 56px;
+  padding: 6px 12px;
+  border: 1px solid #999;
+  background-color: #efefef;
+  text-decoration: none;
+  color: #000;
+  white-space: nowrap;
+}
+
+.admin-form-field {
+  margin-bottom: 16px;
+}
+
+.admin-text-field {
+  width: 100%;
+  max-width: 480px;
+  padding: 6px 8px;
+}
+
+.admin-text-area {
+  width: 100%;
+  padding: 8px;
+  line-height: 1.6;
+}
+
+.pagination-area {
+  margin-top: 24px;
+  text-align: center;
 }

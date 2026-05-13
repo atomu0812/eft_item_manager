@@ -4,9 +4,11 @@
   <p class="detail-label">管理者専用ページです。</p>
 
   <div class="detail-box">
-    <p>今後ここに管理者向け機能を追加していきます。</p>
-    <p>例: アイテム編集、タスク編集、データ追加</p>
+    <p>管理者向け機能をここから利用できます。</p>
   </div>
 
-  <%= link_to "アイテム一覧に戻る", items_path, class: "back-link" %>
+  <div class="field" style="margin-top: 16px;">
+    <p><%= link_to "アイテム編集", admin_items_path %></p>
+    <p><%= link_to "アイテム一覧に戻る", items_path %></p>
+  </div>
 </div>
