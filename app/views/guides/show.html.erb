@@ -1,0 +1,70 @@
+<div class="guide-card">
+  <h1 class="detail-title">使い方</h1>
+
+  <p class="guide-lead">
+    EFT Item Manager は、Escape from Tarkov で必要になるアイテムを、
+    タスク・ハイドアウト・所持数とあわせて管理するためのアプリです。
+  </p>
+
+  <section class="guide-section">
+    <h2>1. アイテム一覧を確認する</h2>
+    <p>
+      「アイテム一覧」では、タスクやハイドアウトで必要になるアイテムを一覧で確認できます。
+      アイテム名で検索したり、必要レベル帯や並び順を変更して、必要なアイテムを探しやすくできます。
+    </p>
+  </section>
+
+  <section class="guide-section">
+    <h2>2. 所持数を登録する</h2>
+    <p>
+      ログインすると、アイテム一覧から現在の所持数を登録できます。
+      所持数を登録することで、必要数に対して足りているかどうかを確認できます。
+    </p>
+  </section>
+
+  <section class="guide-section">
+    <h2>3. 不足アイテム一覧を見る</h2>
+    <p>
+      「不足アイテム一覧」では、必要数に対して所持数が足りていないアイテムだけを確認できます。
+      何を優先して集めるべきかを判断しやすくなります。
+    </p>
+  </section>
+
+  <section class="guide-section">
+    <h2>4. タスク一覧を確認する</h2>
+    <p>
+      「タスク一覧」では、タスクの内容や必要レベルを確認できます。
+      タスクの進行状況を管理することで、進行に合わせて必要なアイテムを整理しやすくなります。
+    </p>
+  </section>
+
+  <section class="guide-section">
+    <h2>5. アイテム詳細を見る</h2>
+    <p>
+      アイテム名をクリックすると、アイテム詳細画面へ移動できます。
+      そのアイテムがどのタスクやハイドアウトで使われるかを確認できます。
+    </p>
+  </section>
+
+  <section class="guide-section">
+    <h2>6. 管理者機能について</h2>
+    <p>
+      管理者ユーザーは、管理画面からアイテム情報を編集できます。
+      通常ユーザーには管理画面へのリンクは表示されません。
+    </p>
+  </section>
+
+  <div class="guide-links">
+    <p><%= link_to "アイテム一覧を見る", items_path %></p>
+
+    <% if user_signed_in? %>
+      <p><%= link_to "不足アイテム一覧を見る", deficit_items_path %></p>
+      <p><%= link_to "タスク一覧を見る", tasks_path %></p>
+    <% else %>
+      <p><%= link_to "新規登録する", new_user_registration_path %></p>
+      <p><%= link_to "ログインする", new_user_session_path %></p>
+    <% end %>
+
+    <p><%= link_to "トップページへ戻る", root_path %></p>
+  </div>
+</div>
