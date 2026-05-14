@@ -12,6 +12,7 @@ class ItemsController < ApplicationController
       ["タスク必要数順", "task_required_quantity"],
       ["ハイドアウト必要数順", "hideout_required_quantity"]
     ]
+    @item_names = Item.order(:name).pluck(:name)
 
     items = Item
       .search_by_name(@q)
