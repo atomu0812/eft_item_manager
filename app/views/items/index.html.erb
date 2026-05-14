@@ -11,7 +11,13 @@
 
   <%= form_with url: items_path, method: :get, local: true, class: "items-search-form" do %>
     <%= label_tag :q, "検索" %>
-    <%= text_field_tag :q, @q, id: "item-search", placeholder: "アイテム名" %>
+    <%= text_field_tag :q, @q, id: "item-search", placeholder: "アイテム名", list: "item-name-list" %>
+
+    <datalist id="item-name-list">
+      <% @item_names.each do |item_name| %>
+        <option value="<%= item_name %>"></option>
+      <% end %>
+    </datalist>
 
     <%= label_tag :level_range, "必要レベル帯" %>
     <%= select_tag :level_range,
