@@ -3,6 +3,9 @@ Rails.application.routes.draw do
 
   root "home#index"
   get "guide", to: "guides#show", as: :guide
+  get "terms", to: "static_pages#terms", as: :terms
+  get "privacy", to: "static_pages#privacy", as: :privacy
+
   resources :items, only: %i[index show]
   resources :tasks, only: %i[index show]
   resources :deficit_items, only: %i[index]
