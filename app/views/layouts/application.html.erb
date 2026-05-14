@@ -18,6 +18,8 @@
         </div>
 
         <nav class="header-nav">
+          <%= link_to "使い方", guide_path, class: "header-button" %>
+
           <% if user_signed_in? %>
             <%= link_to "マイページ", items_path, class: "header-button" %>
 

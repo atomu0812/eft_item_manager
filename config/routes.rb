@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   devise_for :users
 
   root "home#index"
+  get "guide", to: "guides#show", as: :guide
   resources :items, only: %i[index show]
   resources :tasks, only: %i[index show]
   resources :deficit_items, only: %i[index]
