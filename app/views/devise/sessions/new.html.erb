@@ -24,6 +24,22 @@
     </div>
   <% end %>
 
+  <div class="guest-login-box">
+    <p><strong>アカウント登録せずに試す</strong></p>
+
+    <p>
+      一時的なゲストユーザーとして、アイテム管理機能を試せます。
+    </p>
+
+    <p>
+      <%= button_to "ゲストログイン", users_guest_sign_in_path, method: :post, class: "header-button" %>
+    </p>
+
+    <p>
+      <%= link_to "ゲストログインについて", guest_guide_path %>
+    </p>
+  </div>
+
   <div class="field" style="margin-top: 16px;">
     <p><%= link_to "新規登録はこちら", new_user_registration_path %></p>
     <p><%= link_to "パスワードをお忘れですか？", new_user_password_path %></p>
