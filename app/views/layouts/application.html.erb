@@ -21,13 +21,26 @@
           <%= link_to "使い方", guide_path, class: "header-button" %>
 
           <% if user_signed_in? %>
-            <%= link_to "マイページ", items_path, class: "header-button" %>
+            <div class="header-dropdown">
+              <button type="button" class="header-button header-dropdown-button">
+                機能一覧 ▼
+              </button>
 
-            <% if current_user.admin? %>
-              <%= link_to "管理画面", admin_root_path, class: "header-button" %>
+              <div class="header-dropdown-menu">
+                <%= link_to "アイテム一覧", items_path %>
+                <%= link_to "不足アイテム一覧", deficit_items_path %>
+                <%= link_to "タスク一覧", tasks_path %>
+
+                <% if current_user.admin? %>
+                  <%= link_to "管理画面", admin_root_path %>
+                <% end %>
+              </div>
+            </div>
+
+            <% unless current_user.guest? %>
+              <%= link_to "ユーザー情報編集", edit_user_registration_path, class: "header-button" %>
             <% end %>
 
-            <%= link_to "ユーザー情報編集", edit_user_registration_path, class: "header-button" %>
             <%= link_to "ログアウト", destroy_user_session_path, data: { turbo_method: :delete }, class: "header-button" %>
           <% else %>
             <%= link_to "新規登録", new_user_registration_path, class: "header-button" %>

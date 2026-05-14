@@ -1,36 +1,94 @@
-<div class="detail-card">
+<div class="home-card">
   <h1 class="detail-title">EFT Item Manager</h1>
 
-  <% if user_signed_in? %>
-    <p>
-      Escape from Tarkov で必要なアイテムを、
-      タスク・ハイドアウト・所持数とあわせて管理できるアプリです。
-    </p>
-    <p>
-      必要数と現在の所持数を比較しながら、
-      売ってよいアイテムと残しておくべきアイテムを分かりやすく確認できます。
-    </p>
-    <p>
-      ログイン中：<%= current_user.email %>
-    </p>
+  <p>
+    Escape from Tarkov で必要なアイテムを、
+    タスク・ハイドアウト・所持数とあわせて管理できるアプリです。
+  </p>
+  <p>
+    必要数と現在の所持数を比較しながら、
+    売ってよいアイテムと残しておくべきアイテムを分かりやすく確認できます。
+  </p>
 
-    <div class="field" style="margin-top: 16px;">
-      <p><%= link_to "使い方", guide_path %></p>
-      <p><%= link_to "アイテム一覧", items_path %></p>
-      <p><%= link_to "不足アイテム一覧", deficit_items_path %></p>
-      <p><%= link_to "タスク一覧", tasks_path %></p>
-      <p><%= link_to "ユーザー情報編集", edit_user_registration_path %></p>
+  <% if user_signed_in? %>
+    <% if current_user.guest? %>
+      <p>
+        ログイン中：<strong>ゲストユーザー</strong>
+      </p>
+
+      <div class="guest-guide-box">
+        <p><strong>ゲストユーザーで使える機能</strong></p>
+        <ul>
+          <li>アイテム一覧の検索・絞り込み</li>
+          <li>アイテム所持数の登録</li>
+          <li>不足アイテム一覧の確認</li>
+          <li>タスク一覧の確認</li>
+          <li>タスク進行状況のチェック</li>
+          <li>アイテム詳細の確認</li>
+        </ul>
+        <p>
+          ゲストユーザーのデータは一時的なものです。
+          ログアウトすると所持数やタスク進行状況は削除され、次回には引き継がれません。
+        </p>
+      </div>
+    <% else %>
+      <p>
+        ログイン中：<%= current_user.display_name %>
+      </p>
+
+      <div class="user-guide-box">
+        <p><strong>主な機能</strong></p>
+        <ul>
+          <li>アイテム一覧で必要アイテムを確認できます</li>
+          <li>所持数を登録して必要数との差分を確認できます</li>
+          <li>不足アイテム一覧で足りないアイテムだけを確認できます</li>
+          <li>タスク一覧で進行状況を管理できます</li>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="home-feature-grid">
+      <%= link_to items_path, class: "home-feature-card" do %>
+        <h2>アイテム一覧</h2>
+        <p>必要アイテムの検索、所持数登録、用途確認ができます。</p>
+      <% end %>
+
+      <%= link_to deficit_items_path, class: "home-feature-card" do %>
+        <h2>不足アイテム一覧</h2>
+        <p>必要数に対して足りていないアイテムだけを確認できます。</p>
+      <% end %>
+
+      <%= link_to tasks_path, class: "home-feature-card" do %>
+        <h2>タスク一覧</h2>
+        <p>タスクの確認と進行状況の管理ができます。</p>
+      <% end %>
+    </div>
+
+    <div class="field" style="margin-top: 24px;">
+      <p><%= link_to "使い方を見る", guide_path %></p>
+
+      <% unless current_user.guest? %>
+        <p><%= link_to "ユーザー情報編集", edit_user_registration_path %></p>
+      <% end %>
+
       <p><%= link_to "ログアウト", destroy_user_session_path, data: { turbo_method: :delete } %></p>
     </div>
   <% else %>
-    <p>
-      Escape from Tarkov で必要なアイテムを、
-      タスク・ハイドアウト・所持数とあわせて管理できるアプリです。
-    </p>
-    <p>
-      必要数と現在の所持数を比較しながら、
-      売ってよいアイテムと残しておくべきアイテムを分かりやすく確認できます。
-    </p>
+    <div class="guest-guide-box">
+      <p><strong>ゲストログインで試せる機能</strong></p>
+      <ul>
+        <li>アイテム一覧の検索・絞り込み</li>
+        <li>アイテム所持数の登録</li>
+        <li>不足アイテム一覧の確認</li>
+        <li>タスク一覧の確認</li>
+        <li>タスク進行状況のチェック</li>
+        <li>アイテム詳細の確認</li>
+      </ul>
+      <p>
+        ゲストログインは一時的なお試し利用です。
+        データを継続して使いたい場合は、新規登録して利用してください。
+      </p>
+    </div>
 
     <div class="field" style="margin-top: 16px;">
       <p><%= link_to "使い方", guide_path %></p>

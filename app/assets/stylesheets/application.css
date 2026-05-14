@@ -38,6 +38,7 @@ a {
   gap: 8px;
   flex-wrap: wrap;
   justify-content: flex-end;
+  align-items: center;
 }
 
 .header-button {
@@ -49,6 +50,44 @@ a {
   font-size: 12px;
   color: #000;
   white-space: nowrap;
+  cursor: pointer;
+}
+
+.header-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.header-dropdown-button {
+  font-family: inherit;
+}
+
+.header-dropdown-menu {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 100%;
+  min-width: 160px;
+  background-color: #fff;
+  border: 1px solid #999;
+  z-index: 10;
+}
+
+.header-dropdown:hover .header-dropdown-menu {
+  display: block;
+}
+
+.header-dropdown-menu a {
+  display: block;
+  padding: 8px 12px;
+  text-decoration: none;
+  font-size: 13px;
+  color: #000;
+  white-space: nowrap;
+}
+
+.header-dropdown-menu a:hover {
+  background-color: #efefef;
 }
 
 .page-container {
@@ -161,6 +200,15 @@ a {
   padding: 24px;
 }
 
+.home-card {
+  max-width: 760px;
+  width: 100%;
+  margin: 0 auto;
+  border: 1px solid #cfcfcf;
+  background-color: #fff;
+  padding: 28px;
+}
+
 .detail-title {
   margin: 0 0 24px;
   text-align: center;
@@ -188,6 +236,36 @@ a {
 .back-link {
   display: inline-block;
   margin-top: 8px;
+}
+
+.home-feature-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.home-feature-card {
+  display: block;
+  padding: 16px;
+  border: 1px solid #ccc;
+  background-color: #f5f5f5;
+  text-decoration: none;
+  color: #222;
+}
+
+.home-feature-card:hover {
+  background-color: #efefef;
+}
+
+.home-feature-card h2 {
+  margin: 0 0 8px;
+  font-size: 18px;
+}
+
+.home-feature-card p {
+  margin: 0;
+  line-height: 1.6;
 }
 
 /* admin */
@@ -404,4 +482,30 @@ a {
 
 .footer-inner a {
   text-decoration: underline;
+}
+
+/* guest */
+
+.current-user-label {
+  max-width: 220px;
+  overflow-wrap: anywhere;
+  line-height: 1.5;
+}
+
+.guest-guide-box,
+.guest-login-box,
+.guest-feature-box,
+.user-guide-box {
+  margin-top: 16px;
+  padding: 12px;
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  line-height: 1.8;
+}
+
+.guest-guide-box ul,
+.guest-feature-box ul,
+.user-guide-box ul {
+  margin: 8px 0 12px;
+  padding-left: 24px;
 }

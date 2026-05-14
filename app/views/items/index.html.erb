@@ -1,9 +1,9 @@
 <h1 class="page-title">必要アイテム数</h1>
 
 <div class="items-search-row">
-  <div>
+  <div class="current-user-label">
     <% if user_signed_in? %>
-      <strong><%= current_user.email %></strong>
+      <strong><%= current_user.display_name %></strong>
     <% else %>
       <strong>ゲスト</strong>
     <% end %>

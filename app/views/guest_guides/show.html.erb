@@ -1,0 +1,56 @@
+<div class="guide-card">
+  <h1 class="detail-title">ゲストログインについて</h1>
+
+  <p class="guide-lead">
+    ゲストログインでは、アカウント登録をせずに一時的なユーザーとして
+    EFT Item Manager の機能を試すことができます。
+  </p>
+
+  <section class="guide-section">
+    <h2>ゲストユーザーで使える機能</h2>
+    <p>
+      ゲストユーザーでも、通常のログインユーザーと同じように主要な機能を試せます。
+    </p>
+
+    <ul>
+      <li>アイテム一覧の検索・絞り込み</li>
+      <li>アイテム所持数の登録</li>
+      <li>不足アイテム一覧の確認</li>
+      <li>タスク一覧の確認</li>
+      <li>タスク進行状況のチェック</li>
+      <li>アイテム詳細の確認</li>
+    </ul>
+  </section>
+
+  <section class="guide-section">
+    <h2>注意点</h2>
+    <p>
+      ゲストユーザーのデータは一時的なものです。
+      ログアウトすると、ゲストユーザーで登録した所持数やタスク進行状況は削除されます。
+    </p>
+    <p style="margin-top: 12px;">
+      次回利用時には前回の状態は引き継がれません。
+      継続してアイテム所持数やタスク進行状況を管理したい場合は、新規登録して利用してください。
+    </p>
+  </section>
+
+  <section class="guide-section">
+    <h2>ゲストログインの使い方</h2>
+    <p>
+      ログイン画面にある「ゲストログイン」ボタンを押すと、
+      一時的なゲストユーザーとしてログインできます。
+    </p>
+  </section>
+
+  <div class="guide-links">
+    <% unless user_signed_in? %>
+      <p>
+        <%= button_to "ゲストログインする", users_guest_sign_in_path, method: :post, class: "header-button" %>
+      </p>
+    <% end %>
+
+    <p><%= link_to "ログイン画面へ戻る", new_user_session_path %></p>
+    <p><%= link_to "使い方ページへ戻る", guide_path %></p>
+    <p><%= link_to "トップページへ戻る", root_path %></p>
+  </div>
+</div>

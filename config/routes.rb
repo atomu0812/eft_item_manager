@@ -1,8 +1,16 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, controllers: {
+    sessions: "users/sessions",
+    registrations: "users/registrations"
+  }
+
+  devise_scope :user do
+    post "users/guest_sign_in", to: "users/sessions#guest_sign_in", as: :users_guest_sign_in
+  end
 
   root "home#index"
   get "guide", to: "guides#show", as: :guide
+  get "guest_guide", to: "guest_guides#show", as: :guest_guide
   get "terms", to: "static_pages#terms", as: :terms
   get "privacy", to: "static_pages#privacy", as: :privacy
 
