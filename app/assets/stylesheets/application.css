@@ -36,6 +36,8 @@ a {
 .header-nav {
   display: flex;
   gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
 }
 
 .header-button {
@@ -46,6 +48,7 @@ a {
   text-decoration: none;
   font-size: 12px;
   color: #000;
+  white-space: nowrap;
 }
 
 .page-container {
@@ -330,4 +333,75 @@ a {
 
 .guide-links {
   margin-top: 28px;
+}
+
+/* static pages */
+
+.static-page-card {
+  max-width: 760px;
+  width: 100%;
+  margin: 0 auto;
+  border: 1px solid #cfcfcf;
+  background-color: #fff;
+  padding: 28px;
+}
+
+.static-page-lead {
+  margin-bottom: 24px;
+  line-height: 1.8;
+}
+
+.static-page-section {
+  margin-bottom: 24px;
+  padding: 16px;
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+}
+
+.static-page-section h2 {
+  margin: 0 0 12px;
+  font-size: 20px;
+}
+
+.static-page-section p {
+  margin: 0;
+  line-height: 1.8;
+}
+
+.static-page-section ul {
+  margin: 12px 0 0;
+  padding-left: 24px;
+  line-height: 1.8;
+}
+
+.static-page-date {
+  margin-top: 24px;
+  font-size: 13px;
+  color: #555;
+}
+
+.static-page-links {
+  margin-top: 28px;
+}
+
+/* footer */
+
+.site-footer {
+  width: 960px;
+  margin: 0 auto 24px;
+  padding: 12px 24px;
+  text-align: center;
+  font-size: 13px;
+  color: #555;
+}
+
+.footer-inner {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.footer-inner a {
+  text-decoration: underline;
 }
