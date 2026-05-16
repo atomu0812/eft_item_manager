@@ -1,8 +1,9 @@
-<div class="admin-form-card">
+cat > app/views/admin/items/edit.html.erb <<'EOF'
+<div class="admin-form-card admin-item-edit-card">
   <h1 class="detail-title">アイテム編集</h1>
 
   <p class="admin-description">
-    アイテム名と詳細説明を編集できます。
+    アイテム名、詳細説明、タスク・ハイドアウトで必要な個数を編集できます。
   </p>
 
   <%= form_with model: [:admin, @item], local: true do |f| %>
@@ -17,14 +18,90 @@
       </div>
     <% end %>
 
-    <div class="field admin-form-field">
-      <%= f.label :name, "アイテム名" %><br>
-      <%= f.text_field :name, class: "admin-text-field" %>
+    <div class="admin-edit-section">
+      <h2 class="admin-section-title">基本情報</h2>
+
+      <div class="field admin-form-field">
+        <%= f.label :name, "アイテム名" %><br>
+        <%= f.text_field :name, class: "admin-text-field" %>
+      </div>
+
+      <div class="field admin-form-field">
+        <%= f.label :description, "詳細説明" %><br>
+        <%= f.text_area :description, rows: 8, class: "admin-text-area", placeholder: "アイテムの説明や補足情報を入力してください" %>
+      </div>
     </div>
 
-    <div class="field admin-form-field">
-      <%= f.label :description, "詳細説明" %><br>
-      <%= f.text_area :description, rows: 8, class: "admin-text-area", placeholder: "アイテムの説明や補足情報を入力してください" %>
+    <div class="admin-edit-section">
+      <h2 class="admin-section-title">タスクで必要な個数</h2>
+
+      <% if @item_tasks.any? %>
+        <table class="admin-items-table admin-quantity-table">
+          <thead>
+            <tr>
+              <th>タスク名</th>
+              <th>トレーダー</th>
+              <th>必要レベル</th>
+              <th>必要個数</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% @item_tasks.each do |item_task| %>
+              <tr>
+                <td class="admin-item-name"><%= item_task.task.name %></td>
+                <td><%= item_task.task.trader %></td>
+                <td>Lv.<%= item_task.task.level %></td>
+                <td>
+                  <%= number_field_tag "item_task_required_quantities[#{item_task.id}]",
+                                       item_task.required_quantity,
+                                       min: 0,
+                                       class: "admin-required-quantity-field" %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        <p class="text-muted">このアイテムはタスクでは使用されていません。</p>
+      <% end %>
+    </div>
+
+    <div class="admin-edit-section">
+      <h2 class="admin-section-title">ハイドアウトで必要な個数</h2>
+
+      <% if @item_hideouts.any? %>
+        <table class="admin-items-table admin-quantity-table">
+          <thead>
+            <tr>
+              <th>ハイドアウト名</th>
+              <th>必要個数</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% @item_hideouts.each do |item_hideout| %>
+              <tr>
+                <td class="admin-item-name"><%= item_hideout.hideout.name %></td>
+                <td>
+                  <%= number_field_tag "item_hideout_required_quantities[#{item_hideout.id}]",
+                                       item_hideout.required_quantity,
+                                       min: 0,
+                                       class: "admin-required-quantity-field" %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        <p class="text-muted">このアイテムはハイドアウトでは使用されていません。</p>
+      <% end %>
+    </div>
+
+    <div class="detail-box admin-note-box">
+      <p>
+        必要個数を変更すると、アイテム一覧・不足アイテム一覧・アイテム詳細で表示される必要数にも反映されます。
+      </p>
     </div>
 
     <div class="actions">
@@ -37,3 +114,4 @@
     <p><%= link_to "管理画面へ戻る", admin_root_path %></p>
   </div>
 </div>
+EOF

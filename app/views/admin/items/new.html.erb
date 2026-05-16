@@ -1,0 +1,47 @@
+<div class="admin-form-card">
+  <h1 class="detail-title">アイテム追加</h1>
+
+  <p class="admin-description">
+    新しく必要になったアイテムを追加できます。
+    追加後、タスク編集画面から必要アイテムとして紐付けてください。
+  </p>
+
+  <%= form_with model: [:admin, @item], local: true do |f| %>
+    <% if @item.errors.any? %>
+      <div class="flash-message alert">
+        <p><%= @item.errors.count %>件のエラーがあります。</p>
+        <ul>
+          <% @item.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="field admin-form-field">
+      <%= f.label :name, "アイテム名" %><br>
+      <%= f.text_field :name, class: "admin-text-field", placeholder: "例: Corrugated hose" %>
+    </div>
+
+    <div class="field admin-form-field">
+      <%= f.label :description, "詳細説明" %><br>
+      <%= f.text_area :description, rows: 8, class: "admin-text-area", placeholder: "アイテムの説明や補足情報を入力してください" %>
+    </div>
+
+    <div class="detail-box admin-note-box">
+      <p>
+        アイテムを追加しただけでは、必要数には反映されません。
+        タスク編集画面で必要アイテムとして追加すると、必要数に反映されます。
+      </p>
+    </div>
+
+    <div class="actions">
+      <%= f.submit "追加する", class: "header-button" %>
+    </div>
+  <% end %>
+
+  <div class="field" style="margin-top: 24px;">
+    <p><%= link_to "管理者用アイテム一覧へ戻る", admin_items_path %></p>
+    <p><%= link_to "管理画面へ戻る", admin_root_path %></p>
+  </div>
+</div>
