@@ -1,8 +1,17 @@
 <div class="detail-card">
   <h1 class="detail-title"><%= @task.name %></h1>
 
+  <p class="detail-label">トレーダー: <%= @task.trader %></p>
+  <p class="detail-label">必要レベル: Lv.<%= @task.level %></p>
   <p class="detail-label">必要アイテム数: <%= @task.item_tasks.count %>件</p>
   <p class="detail-label">必要個数合計: <%= @task.item_tasks.sum(:required_quantity) %>個</p>
+
+  <% if @task.description.present? %>
+    <div class="detail-box detail-description-box">
+      <p class="detail-label">説明</p>
+      <%= simple_format(@task.description) %>
+    </div>
+  <% end %>
 
   <p class="detail-label">必要アイテム一覧</p>
   <div class="detail-box">

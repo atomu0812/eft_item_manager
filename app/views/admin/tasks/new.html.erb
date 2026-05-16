@@ -1,0 +1,69 @@
+<div class="admin-form-card">
+  <h1 class="detail-title">タスク追加</h1>
+
+  <p class="admin-description">
+    新しく追加されたタスクを登録できます。
+    登録後、必要アイテムを追加する編集画面へ移動します。
+  </p>
+
+  <%= form_with model: [:admin, @task], local: true do |f| %>
+    <% if @task.errors.any? %>
+      <div class="flash-message alert">
+        <p><%= @task.errors.count %>件のエラーがあります。</p>
+        <ul>
+          <% @task.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="field admin-form-field">
+      <%= f.label :name, "タスク名" %><br>
+      <%= f.text_field :name, class: "admin-text-field", placeholder: "例: Debut" %>
+    </div>
+
+    <div class="field admin-form-field">
+      <%= f.label :trader, "トレーダー" %><br>
+      <%= f.text_field :trader,
+                       list: "trader-options",
+                       class: "admin-text-field",
+                       placeholder: "文字を入力すると候補が表示されます" %>
+
+      <datalist id="trader-options">
+        <% @traders.each do |trader| %>
+          <option value="<%= trader %>"></option>
+        <% end %>
+      </datalist>
+
+      <p class="text-muted" style="margin-top: 8px;">
+        既存のトレーダー名は候補から選択できます。新しいトレーダー名を直接入力することもできます。
+      </p>
+    </div>
+
+    <div class="field admin-form-field">
+      <%= f.label :level, "必要レベル" %><br>
+      <%= f.number_field :level, min: 1, value: @task.level || 1, class: "admin-number-field" %>
+    </div>
+
+    <div class="field admin-form-field">
+      <%= f.label :description, "説明文" %><br>
+      <%= f.text_area :description, rows: 8, class: "admin-text-area", placeholder: "タスクの説明や補足情報を入力してください" %>
+    </div>
+
+    <div class="detail-box admin-note-box">
+      <p>
+        タスク追加後、編集画面で必要アイテムを検索して追加できます。
+      </p>
+    </div>
+
+    <div class="actions">
+      <%= f.submit "追加する", class: "header-button" %>
+    </div>
+  <% end %>
+
+  <div class="field" style="margin-top: 24px;">
+    <p><%= link_to "管理者用タスク一覧へ戻る", admin_tasks_path %></p>
+    <p><%= link_to "管理画面へ戻る", admin_root_path %></p>
+  </div>
+</div>

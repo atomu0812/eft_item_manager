@@ -24,7 +24,8 @@ Rails.application.routes.draw do
   namespace :admin do
     root "dashboard#index"
     get "dashboard", to: "dashboard#index"
-    resources :items, only: %i[index edit update]
+    resources :items, only: %i[index new create edit update]
+    resources :tasks, only: %i[index new create edit update]
   end
 
   if Rails.env.development?

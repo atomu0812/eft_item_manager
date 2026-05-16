@@ -1,66 +1,77 @@
-<div class="page-header">
-  <h1>タスク一覧</h1>
-</div>
+<div class="detail-card" style="max-width: 960px;">
+  <h1 class="detail-title">タスク一覧</h1>
 
-<div class="search-form">
-  <%= form_with url: tasks_path, method: :get, local: true do %>
-    <div class="field">
-      <%= label_tag :trader, "トレーダーで絞り込み" %>
-      <%= select_tag :trader,
-          options_for_select([["すべて", ""]] + @traders.map { |trader| [trader, trader] }, @selected_trader) %>
-    </div>
+  <p class="admin-description">
+    タスクの確認と進行状況の管理ができます。完了済みのタスクは緑、未完了のタスクは赤で表示されます。
+  </p>
 
-    <div class="field">
-      <%= label_tag :level, "必要レベルで絞り込み" %>
-      <%= select_tag :level,
-          options_for_select([["すべて", ""]] + @levels.map { |level| ["Lv#{level}", level] }, @selected_level) %>
-    </div>
+  <div class="search-area">
+    <%= form_with url: tasks_path, method: :get, local: true do %>
+      <div class="admin-filter-grid">
+        <div class="field">
+          <%= label_tag :trader, "トレーダーで絞り込み" %><br>
+          <%= select_tag :trader,
+              options_for_select([["すべて", ""]] + @traders.map { |trader| [trader, trader] }, @selected_trader),
+              class: "admin-select-field" %>
+        </div>
 
-    <div class="field">
-      <%= label_tag :status, "進行状況で絞り込み" %>
-      <%= select_tag :status,
-          options_for_select([["すべて", ""], ["完了", "completed"], ["未完了", "incomplete"]], @selected_status) %>
-    </div>
+        <div class="field">
+          <%= label_tag :level, "必要レベルで絞り込み" %><br>
+          <%= select_tag :level,
+              options_for_select([["すべて", ""]] + @levels.map { |level| ["Lv#{level}", level] }, @selected_level),
+              class: "admin-select-field" %>
+        </div>
 
-    <div class="field">
-      <%= submit_tag "絞り込む", class: "header-button" %>
-    </div>
+        <div class="field">
+          <%= label_tag :status, "進行状況で絞り込み" %><br>
+          <%= select_tag :status,
+              options_for_select([["すべて", ""], ["完了", "completed"], ["未完了", "incomplete"]], @selected_status),
+              class: "admin-select-field" %>
+        </div>
+
+        <div class="field admin-filter-action">
+          <%= submit_tag "絞り込む", class: "header-button" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <% if @tasks.any? %>
+    <table class="items-table">
+      <thead>
+        <tr>
+          <th>タスク名</th>
+          <th>トレーダー</th>
+          <th>必要レベル</th>
+          <th>進行状況</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @tasks.each do |task| %>
+          <% user_task = @user_tasks_by_task_id[task.id] %>
+          <% completed = user_task&.completed || false %>
+
+          <tr>
+            <td class="task-name"><%= link_to task.name, task_path(task) %></td>
+            <td><%= task.trader %></td>
+            <td>Lv.<%= task.level %></td>
+            <td>
+              <% if user_signed_in? %>
+                <%= form_with url: user_task_path(task_id: task.id, trader: @selected_trader, level: @selected_level, status: @selected_status), method: :patch, local: true do |f| %>
+                  <%= f.hidden_field :completed, value: completed ? "0" : "1", name: "user_task[completed]" %>
+                  <%= f.submit(completed ? "完了済み" : "未完了",
+                               class: completed ? "status-button-success" : "status-button-danger") %>
+                <% end %>
+              <% else %>
+                <span class="status-badge-danger">ログインしてください</span>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <p>該当するタスクがありません。</p>
   <% end %>
 </div>
-
-<% if @tasks.any? %>
-  <table class="items-table">
-    <thead>
-      <tr>
-        <th>タスク名</th>
-        <th>トレーダー</th>
-        <th>必要レベル</th>
-        <th>進行状況</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @tasks.each do |task| %>
-        <% user_task = @user_tasks_by_task_id[task.id] %>
-        <% completed = user_task&.completed || false %>
-
-        <tr>
-          <td><%= link_to task.name, task_path(task) %></td>
-          <td><%= task.trader %></td>
-          <td><%= task.level %></td>
-          <td>
-            <% if user_signed_in? %>
-              <%= form_with url: user_task_path(task_id: task.id, trader: @selected_trader, level: @selected_level, status: @selected_status), method: :patch, local: true do |f| %>
-                <%= f.hidden_field :completed, value: completed ? "0" : "1", name: "user_task[completed]" %>
-                <%= f.submit(completed ? "完了" : "未完了", class: "simple-button") %>
-              <% end %>
-            <% else %>
-              ログインしてください
-            <% end %>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-<% else %>
-  <p>該当するタスクがありません。</p>
-<% end %>

@@ -1,0 +1,167 @@
+<div class="admin-form-card admin-task-edit-card">
+  <h1 class="detail-title">タスク編集</h1>
+
+  <p class="admin-description">
+    タスク名、トレーダー、必要レベル、説明文、必要アイテムを編集できます。
+  </p>
+
+  <div class="admin-edit-section">
+    <h2 class="admin-section-title">追加候補アイテムを検索</h2>
+
+    <p class="admin-description">
+      追加したいアイテムが多い場合は、ここでアイテム名を検索すると候補を絞り込めます。
+    </p>
+
+    <%= form_with url: edit_admin_task_path(@task), method: :get, local: true do %>
+      <div class="admin-search-form">
+        <%= label_tag :item_q, "アイテム名検索" %>
+        <%= text_field_tag :item_q, @item_q, placeholder: "例: hose / key / salewa" %>
+        <%= submit_tag "検索", class: "simple-button" %>
+        <%= link_to "検索をクリア", edit_admin_task_path(@task), class: "simple-button" %>
+      </div>
+    <% end %>
+  </div>
+
+  <%= form_with model: [:admin, @task], local: true do |f| %>
+    <% if @task.errors.any? %>
+      <div class="flash-message alert">
+        <p><%= @task.errors.count %>件のエラーがあります。</p>
+        <ul>
+          <% @task.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="admin-edit-section">
+      <h2 class="admin-section-title">基本情報</h2>
+
+      <div class="field admin-form-field">
+        <%= f.label :name, "タスク名" %><br>
+        <%= f.text_field :name, class: "admin-text-field" %>
+      </div>
+
+      <div class="field admin-form-field">
+        <%= f.label :trader, "トレーダー" %><br>
+        <%= f.text_field :trader,
+                         list: "trader-options",
+                         class: "admin-text-field",
+                         placeholder: "文字を入力すると候補が表示されます" %>
+
+        <datalist id="trader-options">
+          <% @traders.each do |trader| %>
+            <option value="<%= trader %>"></option>
+          <% end %>
+        </datalist>
+      </div>
+
+      <div class="field admin-form-field">
+        <%= f.label :level, "必要レベル" %><br>
+        <%= f.number_field :level, min: 1, class: "admin-number-field" %>
+      </div>
+
+      <div class="field admin-form-field">
+        <%= f.label :description, "説明文" %><br>
+        <%= f.text_area :description, rows: 8, class: "admin-text-area", placeholder: "タスクの説明や補足情報を入力してください" %>
+      </div>
+    </div>
+
+    <div class="admin-edit-section">
+      <h2 class="admin-section-title">現在の必要アイテム</h2>
+
+      <% if @item_tasks.any? %>
+        <table class="admin-items-table admin-quantity-table">
+          <thead>
+            <tr>
+              <th>アイテム名</th>
+              <th>必要個数</th>
+              <th>削除</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% @item_tasks.each do |item_task| %>
+              <tr>
+                <td class="admin-item-name">
+                  <%= item_task.item.name %>
+                </td>
+
+                <td>
+                  <%= number_field_tag "item_task_required_quantities[#{item_task.id}]",
+                                       item_task.required_quantity,
+                                       min: 0,
+                                       class: "admin-required-quantity-field" %>
+                </td>
+
+                <td>
+                  <label class="admin-delete-check-label">
+                    <%= check_box_tag "delete_item_task_ids[]", item_task.id, false %>
+                    削除する
+                  </label>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        <p class="text-muted">このタスクに必要アイテムは登録されていません。</p>
+      <% end %>
+    </div>
+
+    <div class="admin-edit-section">
+      <h2 class="admin-section-title">必要アイテムを追加</h2>
+
+      <p class="admin-description">
+        アイテム名を入力すると候補が表示されます。候補から選択して、必要個数を入力してください。
+      </p>
+
+      <div class="admin-add-item-grid">
+        <div class="field">
+          <%= label_tag :new_item_name, "追加するアイテム" %><br>
+          <%= text_field_tag :new_item_name,
+                             "",
+                             list: "available-items",
+                             placeholder: "アイテム名を入力して候補から選択",
+                             class: "admin-text-field admin-add-item-name-field" %>
+
+          <datalist id="available-items">
+            <% @available_items.each do |item| %>
+              <option value="<%= item.name %>"></option>
+            <% end %>
+          </datalist>
+
+          <% if @available_items.empty? %>
+            <p class="text-muted" style="margin-top: 8px;">
+              追加できるアイテムがありません。
+            </p>
+          <% else %>
+            <p class="text-muted" style="margin-top: 8px;">
+              表示候補: <%= @available_items.size %>件
+            </p>
+          <% end %>
+        </div>
+
+        <div class="field">
+          <%= label_tag :new_required_quantity, "必要個数" %><br>
+          <%= number_field_tag :new_required_quantity, 1, min: 0, class: "admin-required-quantity-field" %>
+        </div>
+      </div>
+    </div>
+
+    <div class="detail-box admin-note-box">
+      <p>
+        必要アイテムや必要個数を変更すると、アイテム一覧・不足アイテム一覧・タスク詳細で表示される必要数にも反映されます。
+      </p>
+    </div>
+
+    <div class="actions">
+      <%= f.submit "更新する", class: "header-button" %>
+    </div>
+  <% end %>
+
+  <div class="field" style="margin-top: 24px;">
+    <p><%= link_to "管理者用タスク一覧へ戻る", admin_tasks_path %></p>
+    <p><%= link_to "管理画面へ戻る", admin_root_path %></p>
+  </div>
+</div>
