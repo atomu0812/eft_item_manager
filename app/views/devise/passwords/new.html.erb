@@ -1,10 +1,17 @@
 <div class="detail-card">
   <h1 class="detail-title">パスワード再設定</h1>
 
+  <p>
+    登録済みのメールアドレスを入力すると、パスワード再設定用のメールを送信します。
+  </p>
+  <p>
+    セキュリティ保護のため、入力されたメールアドレスが登録済みかどうかは画面上では表示しません。
+  </p>
+
   <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
     <div class="field">
       <%= f.label :email, "メールアドレス" %><br />
-      <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+      <%= f.email_field :email, autofocus: true, autocomplete: "email", required: true %>
     </div>
 
     <div class="actions">

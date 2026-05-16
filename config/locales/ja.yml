@@ -27,7 +27,9 @@ ja:
       destroyed: "アカウントを削除しました。"
 
     passwords:
-      send_instructions: "パスワード再設定メールを送信しました。"
+      send_instructions: "入力されたメールアドレスが登録済みの場合、パスワード再設定メールを送信しました。"
+      send_paranoid_instructions: "入力されたメールアドレスが登録済みの場合、パスワード再設定メールを送信しました。"
+      delivery_failed: "メール送信に失敗しました。時間をおいて再度お試しください。"
       updated: "パスワードを変更しました。"
       updated_not_active: "パスワードを変更しました。"
 
